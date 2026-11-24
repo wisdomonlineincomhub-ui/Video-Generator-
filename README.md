@@ -5,13 +5,36 @@ This platform takes my script, my screen recording, and my voice,
 cuts it, adds captions and B-roll marks, and assembles the final video.
 100% free, no Shotstack, no watermark.
 
+## Run the v1 Studio
+
+```sh
+npm install
+npm run dev
+```
+
+Open the local URL printed by Vite. The studio runs in your browser and keeps
+your script draft and media on your device. Add a screen recording, optional
+voiceover and background music, then mark script lines with `[B-ROLL]` to show
+the recording beneath those captions.
+
+The studio checks every required keyword and restricted phrase before export.
+It renders a 30-second, 1080x1920, 30fps video with animated captions and the
+brand footer. Export uses the browser's native WebM recorder; the MP4/FFmpeg
+render service described below is the planned production pipeline, not part
+of this local v1.
+
+The Wisdom logo is required for export and is loaded from `/assets/logo.png`
+(place the file at `public/assets/logo.png`). You can also upload a logo in the
+studio for the current video. The attached logo was not present in the
+repository when this v1 was built, so add the real brand asset before exporting.
+
 ## What It Does
 - Takes a script with [B-ROLL] marks
 - Takes a screen recording from phone
 - Adds voiceover (Boss cloned voice)
 - Adds captions for each step
-- Assembles with Remotion + FFmpeg
-- Exports final video for TikTok / YouTube / Reels / Shorts
+- Renders a branded 1080x1920 WebM in the browser (v1)
+- Prepares videos for TikTok / YouTube / Reels / Shorts
 
 ## My Content Pillars (Every video must fall inside these 4)
 1. 💰 **Income Education** — how to make money online, freelancing, side hustles, digital skills
@@ -50,7 +73,7 @@ cuts it, adds captions and B-roll marks, and assembles the final video.
 All templates: 1080x1920 (9:16), 30fps, dark background, bold animated text,
 typewriter + pop-in captions, 15-30 seconds.
 
-## How The Whole System Works
+## Planned Production Pipeline
 Cloudflare Worker → generates script (pillar + keyword + compliance enforced)
 ↓ POST /render → Render.com (Node 20 + FFmpeg + Chrome)
 ↓ Remotion renders the composition (1080x1920, 30fps)
